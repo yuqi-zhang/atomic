@@ -682,4 +682,14 @@ class DockerBackend(Backend):
                     stderr=DEVNULL)
 
     def tag_image(self, src, dest):
-        return self.d.tag(src, dest)
+        _registry, _repo, _image, _tag, _ = util.Decompose(dest).all
+        if _registry:
+            _dest = "{}/".format(_registry)
+        else:
+            _dest = ""
+
+        if _repo:
+            _dest += "{}/".format(_repo)
+
+        _dest += "{}".format(_image)
+        return self.d.tag(src, _dest, tag=_tag)
