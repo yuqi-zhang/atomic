@@ -34,6 +34,7 @@ rootfs="/var/lib/containers"
 setup () {
     # Perform setup routines here.
     copy /etc/sysconfig/docker-storage-setup /etc/sysconfig/docker-storage-setup.atomic-tests-backup
+    copy /etc/sysconfig/docker-storage /etc/sysconfig/docker-storage.atomic-tests-backup
     TEST_DEV_1=/dev/vdb
     findmnt -o SOURCE | grep "^$TEST_DEV_1" | uniq | xargs -r umount
     wipefs -a "$TEST_DEV_1"
@@ -50,6 +51,8 @@ teardown () {
     wipefs -a "$TEST_DEV_1"
     copy /etc/sysconfig/docker-storage-setup.atomic-tests-backup /etc/sysconfig/docker-storage-setup
     remove /etc/sysconfig/docker-storage-setup.atomic-tests-backup
+    copy /etc/sysconfig/docker-storage.atomic-tests-backup /etc/sysconfig/docker-storage
+    remove /etc/sysconfig/docker-storage.atomic-tests-backup
     local vgname=$(echo "$VGROUP"|sed 's/ //g')
     set +e
     mnt=$(findmnt -n -o TARGET --first-only --source /dev/${vgname}/${lvname})
@@ -66,6 +69,7 @@ trap teardown EXIT
 # If /etc/sysconfig/docker-storage-setup is missing, atomic should create the file.
 
 rm -f /etc/sysconfig/docker-storage-setup
+rm -f /etc/sysconfig/docker-storage
 
 if [ -n "$VGROUP" ]; then
     cat >>/etc/sysconfig/docker-storage-setup <<EOF
