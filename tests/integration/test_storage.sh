@@ -81,6 +81,9 @@ EOF
     grep -q "^DEVS=\"$TEST_DEV_1\"$" /etc/sysconfig/docker-storage-setup
     [ $(pvs --noheadings -o vg_name $TEST_DEV_1_pvs) == $VGROUP ]
 
+    pvdisplay
+    fdisk -l
+
     # Removing it should undo all that.
 
     ${ATOMIC} storage modify --remove-device $TEST_DEV_1
