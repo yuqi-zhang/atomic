@@ -6,7 +6,7 @@ branches:
 host:
   distro: fedora/26/atomic
   specs:
-    secondary-disk: 35
+    secondary-disk: 5
 
 context: fedora/26/atomic
 
