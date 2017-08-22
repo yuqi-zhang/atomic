@@ -74,6 +74,7 @@ rm -f /etc/sysconfig/docker-storage
 if [ -n "$VGROUP" ]; then
     cat >>/etc/sysconfig/docker-storage-setup <<EOF
 MIN_DATA_SIZE=0G
+CONTAINER_ROOT_LV_SIZE=20%FREE
 EOF
     # Add a device to volume group backing root filesystem.
 
@@ -83,6 +84,7 @@ EOF
 
     pvdisplay
     fdisk -l
+    lsblk
 
     # Removing it should undo all that.
 
