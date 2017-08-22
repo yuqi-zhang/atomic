@@ -8,7 +8,7 @@ if test -z "${INSIDE_CONTAINER:-}"; then
 
         # by default, the root LV on AH is only 3G, but we need a
         # bit more for our tests
-        lvresize -r -L +5G atomicos/root
+        lvresize -r -L +3G atomicos/root
 
         if grep -q ID=fedora /etc/os-release; then
             if [ ! -e /var/tmp/ostree-unlock-ovl.* ]; then
