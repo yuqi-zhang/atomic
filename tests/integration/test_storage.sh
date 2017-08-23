@@ -68,13 +68,12 @@ trap teardown EXIT
 
 # If /etc/sysconfig/docker-storage-setup is missing, atomic should create the file.
 
-rm -f /etc/sysconfig/docker-storage-setup
-rm -f /etc/sysconfig/docker-storage
+# rm -f /etc/sysconfig/docker-storage-setup
+# rm -f /etc/sysconfig/docker-storage
 
 if [ -n "$VGROUP" ]; then
     cat >>/etc/sysconfig/docker-storage-setup <<EOF
 MIN_DATA_SIZE=0G
-CONTAINER_ROOT_LV_SIZE=20%FREE
 EOF
     # Add a device to volume group backing root filesystem.
 
