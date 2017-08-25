@@ -41,9 +41,11 @@ if test -z "${INSIDE_CONTAINER:-}"; then
                -v $PWD:/code \
                -v /:/host \
                --workdir /code \
+               -v /etc/yum.repos.d:/etc/yum.repos.d.host:ro
                -e INSIDE_CONTAINER=1 \
                -e PYTHON=$PYTHON \
-               registry.fedoraproject.org/fedora:26 /code/.papr.sh
+               registry.fedoraproject.org/fedora:26 /bin/sh -c
+               "cp -fv /etc/yum.repos.d{.host/*.repo,}h && /code/.papr.sh"
 
     # run the testsuite on the host
     if [ -z ${NO_TEST} ]; then
